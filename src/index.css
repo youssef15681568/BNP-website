@@ -4,10 +4,13 @@
 
 @layer components{
   .btn-orange{
-    @apply p-2 w-24 cursor-pointer bg-secondary hover:bg-white text-white hover:text-secondary font-bold transition-colors duration-200 active:brightness-50;
+    @apply p-2 w-24 cursor-pointer select-none touch-none bg-secondary hover:bg-white text-white hover:text-secondary font-bold transition-colors duration-200 active:brightness-50 max-sm:active:bg-white max-sm:active:text-secondary max-sm:hover:text-white max-sm:hover:bg-secondary;
   }
   .nav-style{
-    @apply px-4 flex justify-center items-center text-white hover:text-secondary hover:underline cursor-pointer transition-all duration-200;
+    @apply px-4 flex justify-center items-center text-white hover:text-secondary hover:underline cursor-pointer transition-all duration-200 max-sm:w-screen max-sm:bg-primary max-sm:text-white max-sm:p-4 max-sm:mb-0.5 max-sm:font-bold max-sm:hover:no-underline max-sm:active:no-underline max-sm:active:text-white max-sm:active:bg-secondary;
+  }
+  .footer-categories-list{
+    @apply text-white hover:text-secondary hover:underline cursor-pointer m-4 hover:pl-4 transition-all duration-200
   }
 }
 
@@ -85,4 +88,39 @@ body{
   font-family: "Roboto", sans-serif;
   font-weight: 900;
   font-style: italic;
+}
+
+
+@media
+only screen and (-webkit-min-device-pixel-ratio: 1.5),
+only screen and (-o-min-device-pixel-ratio: 3/2),
+only screen and (min--moz-device-pixel-ratio: 1.5),
+only screen and (min-device-pixel-ratio: 1.5){
+
+  html,
+  body{
+    width:100%;
+    overflow-x:hidden;
+  }
+
+}
+
+
+
+/* SVG icons */
+
+.svg-icon {
+  width: 2em;
+  height: 2em;
+}
+
+.svg-icon path,
+.svg-icon polygon,
+.svg-icon rect {
+  fill: white;
+}
+
+.svg-icon circle {
+  stroke: white;
+  stroke-width: 1;
 }
