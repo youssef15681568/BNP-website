@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react'
+import {TypeAnimation} from 'react-type-animation'
 
 export default function ScienceNews(){
 	const API_KEY = "27894f3c50e642aa9d87cb06cf1d41f6"
@@ -34,8 +35,22 @@ export default function ScienceNews(){
 
 	if(loading){
 		return(
-		<div className = "w-screen h-screen flex justify-center items-center">
-			<p className = "text-black font-bold">loading news ...</p>
+		<div className = "w-screen h-screen flex-col flex justify-center items-center">
+			<img src = "icons8-loading-50.png" alt = "loading" width = "40" className = "animate-spin m-2"/>
+
+			<TypeAnimation
+				sequence = {[
+					"loading news ...", 
+					1000,
+					"", 
+					1000
+					]}
+				wrapper = "span"
+				speed = {150}
+				deletionSpeed = {200}
+				className = "text-secondary font-bold"
+				repeat = {Infinity}
+			/>
 		</div>
 		)
 	}
@@ -49,8 +64,8 @@ export default function ScienceNews(){
 						<div className = {`flex flex-col justify-between m-2 border-solid border-4 border-primary`}>
 								<li className = " bg-primary text-white p-2 m-2 h-contain text-xl font-bold " key = {index}>{item.title}</li>
 								<li className = " p-2 h-contain" key = {index + 1}><span className = "text-secondary font-bold font-martian text-xl">Summary : </span>{item.description}</li>
-								<section className = "w-full flex justify-center">
-									<img className = "bg-primary transition-all duration-200 w-full h-[200px] object-cover" src = {item.urlToImage} alt={item.title}/>
+								<section className = "w-full flex justify-center w-full h-[200px] overflow-hidden">
+									<img className = "bg-primary transition-all duration-400 ease-in-out object-cover w-full h-[200px] hover:h-[250px] flex self-center justify-self-center hover:brightness-50" src = {item.urlToImage} alt={item.title}/>
 								</section>
 								<li className = "p-2 text-justify" key = {index + 2}>{item.content}</li>
 								<section className = "flex w-full justify-between">

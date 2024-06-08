@@ -1,8 +1,15 @@
 import React, {useState} from 'react'
+import {Routes, Route, Link, useNavigate} from 'react-router-dom'
+import Home from '../homePage'
+import Signup from './signUpForm'
+
+import {auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, sendEmailVerification} from "../../firebaseConfig.js"
 
 export default function Signin(){
 	const [email, setEmail] = useState("")
 	const [password, setPassword] = useState("")
+	const [error, setError] = useState(null)
+	const navigate = useNavigate()
 
 	const emailInputHandler = (e)=>{
 		setEmail(e.target.value)
@@ -10,7 +17,27 @@ export default function Signin(){
 	const passwordInputHandler = (e)=>{
 		setPassword(e.target.value)
 	}
+
+	const handleSubmit = async (e)=>{
+		e.preventDefault()
+		try{
+			const userCredential = await signInWithEmailAndPassword(auth, email, password)
+
+			if (!userCredential.user.emailVerified){
+				setError("Email not verified. Please check your inbox...")
+				return
+			}
+			{<p>welcome {userCredential.displayName}</p>}
+			console.log("User signed in : ", userCredential.user)
+			console.log("welcome", userCredential.user.displayName)
+			navigate('*')
+
+		}catch(error){
+			setError(error.message)
+		}
+	}
 	return(
+
 		<div className = "flex w-screen h-screen justify-center items-center 
 							max-sm:items-center max-sm:w-screen max-sm:h-full">
 			<div className = "bg-primary flex flex-col items-center justify-center w-[400px] h-[550px] 
@@ -18,16 +45,17 @@ export default function Signin(){
 				<div className = "flex flex-col items-center mb-10
 									max-sm:my-10">
 					<h1 className = "font-roboto text-white hover:text-secondary cursor-pointer text-4xl font-bold transition-colors duration-200
-										max-sm:active:text-secondary max-sm:hover:text-white">BNP</h1>
+										max-sm:active:text-secondary max-sm:hover:text-white"><Link to = "/general">BNP</Link></h1>
 					<span className = 'flex items-center'>
 						<hr className = "w-20 max-sm:w-40"/>
-							<h4 className = "font-light text-nowrap text-xl text-white p hover:text-white select-none px-3">Sign-in</h4>
+							<h4 className = "font-light text-nowrap text-xl text-white hover:text-white select-none px-3">Sign-in</h4>
 						<hr className = " w-20 max-sm:w-40"/>
 					</span>
 				</div>
 				<div className = "flex flex-col items-start
 									max-sm:items-center ">
-					<form method = "post">
+					{error && <p className = "text-white w-80 font-bold mt-0 mb-2">{error}</p>}
+					<form onSubmit = {handleSubmit}>
 
 						<div className = "flex flex-col">
 							<input  type = "text" placeholder = "Email address" name="email" 
@@ -46,7 +74,7 @@ export default function Signin(){
 						<input type = "submit" value = "Sign in"
 						className = "btn-orange w-full mt-2"
 						></input>
-						<p className = "my-2 text-white max-sm:mt-4">Don't have an account yet? <span className = "text-white hover:text-secondary hover:underline cursor-pointer transition-colors duration-200 max-sm:hover:text-white max-sm:hover:no-underline max-sm:active:text-secondary max-sm:active:underline ">sign-up</span> now.</p>
+						<p className = "my-2 text-white max-sm:mt-4">Don't have an account yet? <span className = "text-white hover:text-secondary hover:underline cursor-pointer transition-colors duration-200 max-sm:hover:text-white max-sm:hover:no-underline max-sm:active:text-secondary max-sm:active:underline "><Link to = "/sign-up">sign-up</Link></span> now.</p>
 					</form>
 					
 					<div className = "w-full flex justify-center items-center flex-col">
@@ -77,6 +105,10 @@ export default function Signin(){
 					</div>
 				</div>
 			</div>
+			<Routes>
+				<Route path = "/general" element = {<Home/>}/>
+				<Route path = "/sign-up" element = {<Signup/>}/>
+			</Routes>
 		</div>
 	)
 }

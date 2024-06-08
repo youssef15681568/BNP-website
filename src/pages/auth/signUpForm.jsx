@@ -1,9 +1,18 @@
 import React, {useState} from 'react'
+import {Routes, Route, Link} from 'react-router-dom'
+import Home from '../homePage'
+import Signin from './signInForm'
 
-export default function Signin(){
+import {auth, createUserWithEmailAndPassword, updateProfile, sendEmailVerification} from "../../firebaseConfig.js"
+
+
+
+export default function Signup(){
 	const [fullName, setFullName] = useState("")
 	const [email, setEmail] = useState("")
 	const [password, setPassword] = useState("")
+	const [error, setError] = useState(null)
+	const [message, setMessage] = useState(null)
 
 	const fullNameInputHandler = (e)=>{
 		setFullName(e.target.value)
@@ -14,6 +23,21 @@ export default function Signin(){
 	const passwordInputHandler = (e)=>{
 		setPassword(e.target.value)
 	}
+
+
+	const handleSubmit = async(e)=>{
+		e.preventDefault()
+		try{
+			const userCredential = await createUserWithEmailAndPassword(auth, email, password)
+			await updateProfile(userCredential.user, {displayName:fullName})
+			await sendEmailVerification(userCredential.user)
+			setMessage("Verification email sent. Please chek your inbox.")
+			console.log('user created : ', userCredential.user)
+		} catch(err){
+			setError(err.message)
+		}
+	}
+
 	return(
 		<div className = "flex w-screen h-screen justify-center items-center 
 							max-sm:items-center max-sm:w-screen max-sm:h-full">
@@ -22,7 +46,7 @@ export default function Signin(){
 				<div className = "flex flex-col items-center mb-5
 									max-sm:my-10">
 					<h1 className = "font-roboto text-white hover:text-secondary cursor-pointer text-4xl font-bold transition-colors duration-200
-										max-sm:active:text-secondary max-sm:hover:text-white">BNP</h1>
+										max-sm:active:text-secondary max-sm:hover:text-white"><Link to = "/general">BNP</Link></h1>
 					<span className = 'flex items-center '>
 						<hr className = "w-20 max-sm:w-40"/>
 							<h4 className = "font-light text-xl text-white p hover:text-white select-none px-3 text-nowrap">Sign-up</h4>
@@ -31,23 +55,28 @@ export default function Signin(){
 				</div>
 				<div className = "flex flex-col items-start 
 									max-sm:items-center ">
-					<form method = "post">
+					{error && <p>{error}</p>}
+					{message && <p>{}</p>}
+					<form onSubmit = {handleSubmit}>
 
 						<div className = "flex flex-col">
 							<input  type = "text" placeholder = "Full name" name="email" 
 							value = {fullName} onChange = {fullNameInputHandler}
 							className = "w-80 h-10 p-4 placeholder:text-slate-500 placeholder:hover:text-slate-400 mb-2
 											max-sm:w-72 max-sm:focus:outline-none"
+							required
 							></input>
 							<input  type = "text" placeholder = "Email address" name="email"
 							value = {email} onChange = {emailInputHandler} 
 							className = "w-80 h-10 p-4 placeholder:text-slate-500 placeholder:hover:text-slate-400 mb-2
 											max-sm:w-72 max-sm:focus:outline-none"
+							required
 							></input>
 							<input  type = "password" placeholder = "Password" name="password" 
 							value = {password} onChange = {passwordInputHandler}
 							className = "w-80 h-10 p-4 placeholder:text-slate-500 placeholder:hover:text-slate-400 mb-2
 											max-sm:w-72 max-sm:focus:outline-none"
+							required
 							></input>
 						</div>
 						<p className = "hover:underline text-white cursor-pointer
@@ -59,7 +88,7 @@ export default function Signin(){
 					</form>
 					
 					<div className = "w-full flex justify-center items-center flex-col">
-						<p className = "my-2 text-white">Already have an account? <span className = "text-white hover:text-secondary hover:underline cursor-pointer transition-colors duration-200 max-sm:hover:text-white max-sm:hover:no-underline max-sm:active:text-secondary max-sm:active:underline ">sign-in</span>.</p>
+						<p className = "my-2 text-white">Already have an account? <span className = "text-white hover:text-secondary hover:underline cursor-pointer transition-colors duration-200 max-sm:hover:text-white max-sm:hover:no-underline max-sm:active:text-secondary max-sm:active:underline "><Link to = "/sign-in">sign-in</Link></span>.</p>
 						<span className = 'flex items-center'>
 							<hr className = "fill-green-500 w-32
 												max-sm:w-40"/>
@@ -90,6 +119,10 @@ export default function Signin(){
 					</div>
 				</div>
 			</div>
+			<Routes>
+				<Route path = "/general" element = {<Home/>}/>
+				<Route path = "/sign-in" element = {<Signin/>}/>
+			</Routes>
 		</div>
 	)
 }
