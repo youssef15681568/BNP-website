@@ -36,7 +36,7 @@ export default function HealthNews(){
 	if(loading){
 		return(
 		<div className = "w-screen h-screen flex-col flex justify-center items-center">
-			<img src = {`${import.meta.env.BASE_URL}icons8-loading-50.png`} alt = "loading" width = "40" className = "animate-spin m-2"/>
+			<img src = "icons8-loading-50.png" alt = "loading" width = "40" className = "animate-spin m-2"/>
 
 			<TypeAnimation
 				sequence = {[
