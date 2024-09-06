@@ -62,20 +62,20 @@ export default function HealthNews(){
 				{data.articles?.map((item,index)=>{
 					return(
 						<div className = {`flex flex-col justify-between m-2 border-solid border-4 border-primary`}>
-								<li className = " bg-primary text-white p-2 m-2 h-contain text-xl font-bold " key = {index}>{item.title}</li>
-								<li className = " p-2 h-contain" key = {index + 1}><span className = "text-secondary font-bold font-martian text-xl">Summary : </span>{item.description}</li>
+								<li className = " bg-primary text-white p-2 m-2 h-contain text-xl font-bold " key = {parseInt(index)}>{item.title}</li>
+								<li className = " p-2 h-contain" key = {parseInt(index) + 1}><span className = "text-secondary font-bold font-martian text-xl">Summary : </span>{item.description}</li>
 								<section className = "w-full flex justify-center w-full h-[200px] overflow-hidden">
 									<img className = "bg-primary transition-all duration-400 ease-in-out object-cover w-full h-[200px] hover:h-[250px] flex self-center justify-self-center hover:brightness-50" src = {item.urlToImage} alt={item.title}/>
 								</section>
-								<li className = "p-2 text-justify" key = {index + 2}>{item.content}</li>
+								<li className = "p-2 text-justify" key = {parseInt(index) + 2}>{item.content}</li>
 								<section className = "flex w-full justify-between">
-									<li className = " p-2 h-contain" key = {index + 5}>{item.source.name}</li>
+									<li className = " p-2 h-contain" key = {parseInt(index) + 5}>{item.source.name}</li>
 									<vr/>
-									<li className = " p-2 h-contain" key = {index + 4}>{item.publishedAt}</li>
+									<li className = " p-2 h-contain" key = {parseInt(index) + 4}>{item.publishedAt}</li>
 								</section>
 								
 
-								<li className = " w-full text-end p-4 h-contain font-martian" key = {index + 3}><span className = "font-bold text-primary">Author : </span>{item.author}</li>
+								<li className = " w-full text-end p-4 h-contain font-martian" key = {parseInt(index) + 3}><span className = "font-bold text-primary">Author : </span>{item.author}</li>
 		
 								<button className = "btn-orange bg-primary hover:text-white hover:bg-secondary text-nowrap w-full "><a href={item.url}>See full article</a></button>
 		
