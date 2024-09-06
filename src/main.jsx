@@ -9,8 +9,10 @@ import {BrowserRouter, Routes, Route} from 'react-router-dom'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <BrowserRouter>
-        <Home/>
+    <BrowserRouter basename="/BNP-website">
+        <Routes>
+            <Route index element={<Home/>}/>
+        </Routes>
     </BrowserRouter>
   </React.StrictMode>,
 )

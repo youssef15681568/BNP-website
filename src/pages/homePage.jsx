@@ -67,7 +67,7 @@ export default function Home(){
 			<nav className = "flex justify-between items-center bg-primary h-15 max-sm:hidden">
 				<h1 className = "p-2 mx-3 font-roboto font-bold text-2xl text-white hover:text-secondary cursor-pointer transition-colors duration-200"><Link to = "/general">BNP</Link></h1>
 				<ul className = "flex justify-between">
-					<li className = "nav-style"><Link to = "*">Home</Link></li>
+					<li className = "nav-style"><Link to = "/">Home</Link></li>
 					<li className = "nav-style"><Link to = "/business">Business</Link></li>
 					<li className = "nav-style"><Link to = "/health">Health</Link></li>
 					<li className = "nav-style"><Link to = "/science">Science</Link></li>
@@ -108,7 +108,7 @@ export default function Home(){
 				</div>
 				<div className = {`fixed z-100  transition-all duration-500 ${showNavbar ? "top-[56px] backdrop-blur" : "top-[56px] pointer-events-none "}`}>
 					<ul className = "flex justify-between max-sm:flex max-sm:flex-col">
-						<Link onClick = {handleMobileNavbarClick} to = "*"><li className = {`relative left-0 nav-style transition-all duration-500 ${showNavbar ? "left-0" : "scale-x-0 opacity-0"}`}>Home</li></Link>
+						<Link onClick = {handleMobileNavbarClick} to = "/"><li className = {`relative left-0 nav-style transition-all duration-500 ${showNavbar ? "left-0" : "scale-x-0 opacity-0"}`}>Home</li></Link>
 						<Link onClick = {handleMobileNavbarClick} to = "/business"><li className = {`relative left-0 nav-style transition-all duration-300 ${showNavbar ? "right-0" : "scale-x-0 opacity-0"}`}>Business</li></Link>
 						<Link onClick = {handleMobileNavbarClick} to = "/health"><li className = {`relative left-0 nav-style transition-all duration-500 ${showNavbar ? "left-0" : "scale-x-0 opacity-0"}`}>Health</li></Link>
 						<Link onClick = {handleMobileNavbarClick} to = "/science"><li className = {`relative left-0 nav-style transition-all duration-300 ${showNavbar ? "right-0" : "scale-x-0 opacity-0"}`}>Science</li></Link>
@@ -137,7 +137,7 @@ export default function Home(){
 		
 			<div>
 				<Routes>
-					<Route path = "*" element = {<GeneralNews/>}/>
+					<Route path = "/" element = {<GeneralNews/>}/>
 					<Route path = "/business" element = {<BusinessNews/>}/>
 					<Route path = "/health" element = {<HealthNews/>}/>
 					<Route path = "/science" element = {<ScienceNews/>}/>
